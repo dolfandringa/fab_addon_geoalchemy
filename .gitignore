@@ -1,0 +1,15 @@
+.pytest_cache
+*.egg-info
+.eggs
+*.pyc
+app.db
+./tmp
+build/
+dist/
+build/*
+dist/*
+./.idea
+./.idea/*
+env
+venv
+*.sublime*
