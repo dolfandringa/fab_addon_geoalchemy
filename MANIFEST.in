@@ -1,0 +1,6 @@
+include LICENSE
+include README.md
+prune *.pyc
+recursive-include fab_addon_geoalchemy/static *
+recursive-include fab_addon_geoalchemy/templates *
+recursive-include fab_addon_geoalchemy/translations *
