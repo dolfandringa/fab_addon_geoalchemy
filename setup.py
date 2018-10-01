@@ -5,19 +5,24 @@ import multiprocessing
 from setuptools import setup, find_packages
 
 addon = imp.load_source('config', 'config.py')
-version = imp.load_source('version', os.path.join(addon.FULL_ADDON_NAME, 'version.py'))
+pkg = addon.FULL_ADDON_NAME
+version = imp.load_source('version', os.path.join(pkg, 'version.py'))
+
 
 def fpath(name):
     return os.path.join(os.path.dirname(__file__), name)
 
+
 def read(fname):
     return open(fpath(fname)).read()
+
 
 def desc():
     return read('README.md')
 
+
 setup(
-    name=addon.FULL_ADDON_NAME,
+    name=pkg,
     version=version.VERSION_STRING,
     url='https://github.com/dolfandringa/fab_addon_geoalchemy/',
     license='MIT',
