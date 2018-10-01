@@ -36,15 +36,21 @@ setup(
     package_data={'': ['LICENSE', 'config.py', 'README.md']},
     zip_safe=False,
     platforms='any',
+    dependency_links=[
+        'git+http://github.com/dolfandringa/Flask-AppBuilder.git#egg=Flask-AppBuilder-1.12.0'
+    ],
     install_requires=[
-        'Flask-AppBuilder>=1.5.0',
+        'Flask-AppBuilder>=1.12.0',
         'shapely',
         'sqlalchemy',
+        'psycopg2',
         'GeoAlchemy2'
     ],
-    setup_require=['pytest-runner', 'm2r'],
+    setup_requires=['pytest-runner'],
     tests_require=[
         'pytest',
+        'pytest-cov',
+        'coverage'
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',

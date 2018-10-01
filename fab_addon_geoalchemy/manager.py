@@ -23,7 +23,8 @@ class GeoAlchemyManager(BaseManager):
                                    template_folder='templates',
                                    static_folder='static/fab_addon_geoalchemy',
                                    static_url_path='/fab_addon_geoalchemy')
-        self.addon_js = [('fab_addon_geoalchemy.static', 'js/leaflet.js')]
+        self.addon_js = [('fab_addon_geoalchemy.static', 'js/leaflet.js'),
+                         ('fab_addon_geoalchemy.static', 'js/main.js')]
         self.addon_css = [('fab_addon_geoalchemy.static', 'css/leaflet.css')]
         log.info("Initializing GeoAlchemyManager")
 

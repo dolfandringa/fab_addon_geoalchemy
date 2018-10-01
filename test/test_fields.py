@@ -20,9 +20,10 @@ from fab_addon_geoalchemy.widgets import LatLonWidget
 cfg = {'SQLALCHEMY_DATABASE_URI': 'postgresql:///test',
        'CSRF_ENABLED': False,
        'WTF_CSRF_ENABLED': False,
-       'SECRET_KEY': 'bla'}
+       'SECRET_KEY': 'bla',
+       'ADDON_MANAGERS': ['fab_addon_geoalchemy.manager.GeoAlchemyManager']}
 
-app = Flask('wtforms_jsonschema2_testing')
+app = Flask('testapp')
 app.config.update(cfg)
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
 metadata = MetaData(bind=engine)
@@ -68,6 +69,22 @@ class TestFields(TestCase):
         db.session.commit()
         db.session.flush()
 
+    def test_manager_registration(self):
+        self.assertEqual(list(appbuilder.addon_managers.keys()),
+                         ['fab_addon_geoalchemy.manager.GeoAlchemyManager'])
+
+    def test_additional_js_css(self):
+        """
+        Test if the js and css files are registered.
+        """
+        mgr = appbuilder.addon_managers[
+            'fab_addon_geoalchemy.manager.GeoAlchemyManager']
+        self.assertEqual(mgr.addon_js,
+                         [('fab_addon_geoalchemy.static', 'js/leaflet.js'),
+                          ('fab_addon_geoalchemy.static', 'js/main.js')])
+        self.assertEqual(mgr.addon_css,
+                         [('fab_addon_geoalchemy.static', 'css/leaflet.css')])
+
     def testFieldConversion(self):
         form = ObservationView().add_form()
         self.assertTrue(hasattr(form, 'location'))
@@ -75,7 +92,8 @@ class TestFields(TestCase):
         self.assertIsInstance(form.location.widget, LatLonWidget)
         correct_html = 'Latitude: <input type="text" id="location_lat" ' +\
             'name="location_lat"> Longitude: <input type="text" ' +\
-            'id="location_lon" name="location_lon">'
+            'id="location_lon" name="location_lon">' +\
+            '<div class="leaflet_map" id="location_map"></div>'
         print(correct_html)
         widget = form.location()
         print(widget)
@@ -109,7 +127,8 @@ class TestFields(TestCase):
         correct_html = 'Latitude: <input type="text" id="location_lat" ' +\
             'name="location_lat" value="52.34812"> ' +\
             'Longitude: <input type="text" id="location_lon" ' +\
-            'name="location_lon" value="5.98193">'
+            'name="location_lon" value="5.98193">' +\
+            '<div class="leaflet_map" id="location_map"></div>'
         print(widget)
         print(correct_html)
         self.assertEqual(widget, correct_html)
@@ -132,7 +151,8 @@ class TestFields(TestCase):
         correct_html = 'Latitude: <input type="text" id="location_lat" ' +\
             'name="location_lat" value="52.34812"> ' +\
             'Longitude: <input type="text" id="location_lon" ' +\
-            'name="location_lon" value="5.98193">'
+            'name="location_lon" value="5.98193">' +\
+            '<div class="leaflet_map" id="location_map"></div>'
         widget = form.location()
         print(widget)
         print(correct_html)
