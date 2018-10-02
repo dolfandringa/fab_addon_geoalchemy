@@ -20,6 +20,8 @@ Add the following to your config.py:
 ADDON_MANAGERS = ['fab_addon_geoalchemy.manager.GeoAlchemyManager']
 ```
 
+And then use this for your models and views:
+
 
 ```
 from sqlalchemy import Column, String
