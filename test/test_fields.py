@@ -140,6 +140,25 @@ class TestFields(TestCase):
         print(correct_html)
         self.assertEqual(widget, correct_html)
 
+    def testEmptyValue(self):
+        form = ObservationView().add_form()
+        data = MultiDict({'name': 'test',
+                          'location_lat': '',
+                          'location_lon': '',
+                          'location2_lat': '52.34812',
+                          'location2_lon': '5.98193'})
+        form.process(formdata=data)
+        self.assertEqual(form.location.data, None)
+        self.assertEqual(form.location2.data,
+                         'SRID=3857;POINT(5.98193 52.34812)')
+        form.process(formdata=data)
+        row = Observation()
+        form.populate_obj(row)
+        db.session.add(row)
+        db.session.commit()
+        db.session.flush()
+        self.assertEqual(row.location, None)
+
     def testFormRefresh(self):
         print("Starting testFormRefresh")
         row = Observation(name='test',

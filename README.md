@@ -1,8 +1,10 @@
 # fab_addon_geoalchemy
 Implementation of GeoAlchemy fields for Flask Appbuilder.
 
-It automatically transforms POINT Geometry columns to widgets with a field for latitude and longitude.
-The goal is to add a leaflet widget and add support for line and polygon as well.
+It automatically transforms POINT Geometry columns to widgets with a field for latitude and longitude
+and a leaflet map. The map has a pointer for the location, and there is two way binding where dragging 
+the pointer changes the value in the input fields and vice-versa.
+Later on, support for line and polygon columns may be added as well (pull requests welcome).
 
 ## Installation
 

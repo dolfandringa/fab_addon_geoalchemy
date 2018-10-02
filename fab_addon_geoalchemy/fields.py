@@ -23,6 +23,10 @@ class PointField(GeometryField):
         super(PointField, self).__init__(*args, **kwargs)
 
     def _getpoint(self, lat, lon):
+        if (lat is unset_value or lon is unset_value
+                or lat is None or lon is None
+                or lat == '' or lon == ''):
+            return None
         point = "SRID={srid};POINT({lon} {lat})".format(
             lat=lat, lon=lon, srid=self.srid)
         log.debug("returning point for {lat}, {lon}: {point}".format(
@@ -36,6 +40,7 @@ class PointField(GeometryField):
         log.debug("Processing field {} with data: {}, obj: {} and formdata: {}"
                   .format(self.name, data, obj, formdata))
         if data is unset_value:
+            log.debug('{} is unset value'.format(data))
             try:
                 data = self.default()
             except TypeError:
@@ -68,6 +73,7 @@ class PointField(GeometryField):
                 self.lat = formdata.get(latname)
                 self.raw_data = [self._getpoint(formdata.get(latname),
                                                 formdata.get(lonname))]
+                log.debug("Setting raw_data to {}".format(self.raw_data))
             else:
                 self.raw_data = []
 

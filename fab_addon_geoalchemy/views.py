@@ -1,4 +1,4 @@
-from flask.ext.appbuilder import ModelView
+from flask_appbuilder import ModelView
 from flask_appbuilder.forms import GeneralModelConverter, FieldConverter
 from .widgets import LatLonWidget
 from .fields import GeometryField, PointField
