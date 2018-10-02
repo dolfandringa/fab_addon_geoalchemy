@@ -45,4 +45,8 @@ class LatLonWidget(Input):
                      self.html_params(name="%s_lon" % field.name, **lonkwargs))
         leaflet_map = Markup('<div class="leaflet_map" %s></div>' %
                              self.html_params(id='%s_map' % field.name))
-        return lat+lon+leaflet_map
+        script = Markup('<script type="text/javascript">' +
+                        'createPointMap("{id}_map","{id}_lat", "{id}_lon")'
+                        .format(id=field.name) +
+                        ';</script>')
+        return lat+lon+leaflet_map+script

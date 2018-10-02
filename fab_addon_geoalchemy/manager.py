@@ -25,7 +25,8 @@ class GeoAlchemyManager(BaseManager):
                                    static_url_path='/fab_addon_geoalchemy')
         self.addon_js = [('fab_addon_geoalchemy.static', 'js/leaflet.js'),
                          ('fab_addon_geoalchemy.static', 'js/main.js')]
-        self.addon_css = [('fab_addon_geoalchemy.static', 'css/leaflet.css')]
+        self.addon_css = [('fab_addon_geoalchemy.static', 'css/leaflet.css'),
+                          ('fab_addon_geoalchemy.static', 'css/map.css')]
         log.info("Initializing GeoAlchemyManager")
 
     def register_views(self):

@@ -83,7 +83,8 @@ class TestFields(TestCase):
                          [('fab_addon_geoalchemy.static', 'js/leaflet.js'),
                           ('fab_addon_geoalchemy.static', 'js/main.js')])
         self.assertEqual(mgr.addon_css,
-                         [('fab_addon_geoalchemy.static', 'css/leaflet.css')])
+                         [('fab_addon_geoalchemy.static', 'css/leaflet.css'),
+                          ('fab_addon_geoalchemy.static', 'css/map.css')])
 
     def testFieldConversion(self):
         form = ObservationView().add_form()
@@ -93,7 +94,10 @@ class TestFields(TestCase):
         correct_html = 'Latitude: <input type="text" id="location_lat" ' +\
             'name="location_lat"> Longitude: <input type="text" ' +\
             'id="location_lon" name="location_lon">' +\
-            '<div class="leaflet_map" id="location_map"></div>'
+            '<div class="leaflet_map" id="location_map"></div>' +\
+            '<script type="text/javascript">' +\
+            'createPointMap("location_map","location_lat", "location_lon")' +\
+            ';</script>'
         print(correct_html)
         widget = form.location()
         print(widget)
@@ -128,7 +132,10 @@ class TestFields(TestCase):
             'name="location_lat" value="52.34812"> ' +\
             'Longitude: <input type="text" id="location_lon" ' +\
             'name="location_lon" value="5.98193">' +\
-            '<div class="leaflet_map" id="location_map"></div>'
+            '<div class="leaflet_map" id="location_map"></div>' +\
+            '<script type="text/javascript">' +\
+            'createPointMap("location_map","location_lat", "location_lon")' +\
+            ';</script>'
         print(widget)
         print(correct_html)
         self.assertEqual(widget, correct_html)
@@ -152,7 +159,10 @@ class TestFields(TestCase):
             'name="location_lat" value="52.34812"> ' +\
             'Longitude: <input type="text" id="location_lon" ' +\
             'name="location_lon" value="5.98193">' +\
-            '<div class="leaflet_map" id="location_map"></div>'
+            '<div class="leaflet_map" id="location_map"></div>' +\
+            '<script type="text/javascript">' +\
+            'createPointMap("location_map","location_lat", "location_lon")' +\
+            ';</script>'
         widget = form.location()
         print(widget)
         print(correct_html)
