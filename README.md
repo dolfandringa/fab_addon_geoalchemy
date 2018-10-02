@@ -14,6 +14,13 @@ Run `pip install fab-addon-geoalchemy`.
 You can find examples in the unittests in the tests folder.
 But in short, this is what you need to do:
 
+Add the following to your config.py:
+
+```
+ADDON_MANAGERS = ['fab_addon_geoalchemy.manager.GeoAlchemyManager']
+```
+
+
 ```
 from sqlalchemy import Column, String
 from fab_addon_geoalchemy.views import GeoModelView
@@ -38,3 +45,4 @@ class ObservationView(GeoModelView):
 ```
 
 This will automatically create the LatLonWidget in the form, and process the data to transform the latitude and longitude values into a point geometry in the database. The srid form the column is used by the field for the conversion of the text coordinates to the geometry. No validation is done if the entered coordinates are actually valid for the specified SRID.
+
