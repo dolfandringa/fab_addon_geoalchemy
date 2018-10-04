@@ -37,10 +37,10 @@ setup(
     zip_safe=False,
     platforms='any',
     dependency_links=[
-        'git+http://github.com/dolfandringa/Flask-AppBuilder.git#egg=Flask-AppBuilder-1.12.0'
+        'git+http://github.com/dolfandringa/Flask-AppBuilder.git#egg=Flask-AppBuilder-1.13.dev1'
     ],
     install_requires=[
-        'Flask-AppBuilder>=1.12.0',
+        'Flask-AppBuilder>=1.13.dev1',
         'shapely',
         'sqlalchemy',
         'psycopg2',
