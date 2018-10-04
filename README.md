@@ -1,6 +1,7 @@
 # fab_addon_geoalchemy
 
 [![Build status](https://travis-ci.com/dolfandringa/fab_addon_geoalchemy.svg?branch=master)](https://travis-ci.com/dolfandringa/fab_addon_geoalchemy)
+
 Implementation of GeoAlchemy fields for Flask Appbuilder.
 
 It automatically transforms POINT Geometry columns to widgets with a field for latitude and longitude
