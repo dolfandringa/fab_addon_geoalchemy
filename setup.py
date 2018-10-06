@@ -1,5 +1,4 @@
 import os
-import sys
 import imp
 import multiprocessing
 from setuptools import setup, find_packages
@@ -37,10 +36,10 @@ setup(
     zip_safe=False,
     platforms='any',
     dependency_links=[
-        'git+http://github.com/dolfandringa/Flask-AppBuilder.git#egg=Flask-AppBuilder-1.13.dev1'
+        'http://github.com/dolfandringa/Flask-AppBuilder/tarball/develop#egg=Flask-AppBuilder-1.13.0'
     ],
     install_requires=[
-        'Flask-AppBuilder>=1.13.dev1',
+        'Flask-AppBuilder>=1.13.0',
         'shapely',
         'sqlalchemy',
         'psycopg2',
