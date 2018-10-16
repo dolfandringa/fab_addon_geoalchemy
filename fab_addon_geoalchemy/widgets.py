@@ -1,13 +1,28 @@
 from wtforms.widgets import Input
-from flask import render_template
 from markupsafe import Markup
 import logging
 from copy import deepcopy
+from geoalchemy2.shape import to_shape
 
 log = logging.getLogger(__name__)
 
 
 class LatLonWidget(Input):
+
+    _ro_template = Markup(
+        '<label>Latitude:</label> {latitude} '
+        '<label>Longitude:</label> {longitude} '
+        '<div class="leaflet_map" id="{fieldname}_map"></div>'
+        '<script type="text/javascript">createROPointMap("{fieldname}_map", '
+        '{latitude}, {longitude});</script>')
+
+    @classmethod
+    def getROMap(cls, value, fieldname):
+        geom = to_shape(value)
+        latitude = geom.y
+        longitude = geom.x
+        return cls._ro_template.format(latitude=latitude, longitude=longitude,
+                                       fieldname=fieldname)
 
     def __call__(self, field, **kwargs):
         log.debug("Instantiating LatLonWidget")

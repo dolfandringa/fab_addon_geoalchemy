@@ -49,12 +49,18 @@ class Observation(db.Model):
 class ObservationView(GeoModelView):
     datamodel = GeoSQLAInterface(Observation)
     add_columns = ['name', 'location', 'location2']
+    show_columns = ['name', 'location', 'location2']
 
 
 appbuilder.add_view(ObservationView, 'observations')
 NL = 'SRID=4326;POLYGON((4.40108047690016 53.3586997019374,2.8607023099851' +\
      '51.4002188897169,6.9247420162497 50.6194989118665,7.67988543219077 ' +\
      '54.0188617734724,4.40108047690016 53.3586997019374))'
+
+show_html = '<label>Latitude:</label> 1.0 <label>Longitude:</label> 4.0 ' +\
+    '<div class="leaflet_map" id="location_map"></div>' +\
+    '<script type="text/javascript">' +\
+    'createROPointMap("location_map", 1.0, 4.0);</script>'
 
 
 class TestFields(TestCase):
@@ -68,6 +74,21 @@ class TestFields(TestCase):
         db.session.add(Observation(name='something'))
         db.session.commit()
         db.session.flush()
+
+    def test_unkown_column_is_point(self):
+        interf = GeoSQLAInterface(Observation)
+        self.assertFalse(interf.is_point("bla"))
+
+
+    def test_show_widget(self):
+        obs = Observation(name='test', location='SRID=4326;POINT(4 1)')
+        db.session.add(obs)
+        db.session.commit()
+        db.session.flush()
+        interf = GeoSQLAInterface(Observation)
+        w = str(interf._get_attr_value(obs, 'location'))
+        self.assertIsInstance(w, str)
+        self.assertEqual(w, show_html)
 
     def test_manager_registration(self):
         self.assertEqual(list(appbuilder.addon_managers.keys()),
